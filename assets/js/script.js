@@ -9,7 +9,6 @@ currentDate();
 newDay(makeArray());
 saveBtn();
 backgroundColor();
-clearDay();
 
 // display current time
 function currentDate() {
