@@ -6,13 +6,14 @@ var indexId;
 
 // runs at beginning of app
 currentDate();
-startDay(makeArray());
+newDay(makeArray());
 saveBtn();
+backgroundColor();
 
 // display current time
 function currentDate() {
     var date = moment().format("dddd, MMMM Do");
-    $("#currentDay").html(date);
+    $("#currentDay").text(date);
     console.log(date);
 };
 
@@ -27,10 +28,10 @@ function makeArray() {
 };
 
 // populate timeblocks from local storage
-function startDay(arr) {
-    arr.each(function (i) {
-      arr[i] = JSON.parse(localStorage.getItem(i));
-      this.val(arr[i]);
+function newDay(array) {
+    array.each(function (i) {
+      array[i] = JSON.parse(localStorage.getItem(i));
+      this.val(array[i]);
       this.css('color', 'black');
     });
   }
@@ -38,8 +39,27 @@ function startDay(arr) {
 // save input to local storage
 function saveBtn() {
     $('.saveBtn').on('click', function () {
-      userInput = $(this).siblings('.form-control').val().trim();
+      userInput = $(this)
+        .siblings('.form-control')
+        .val()
+        .trim();
       indexId = $(this).attr('data-id');
       localStorage.setItem(indexId, JSON.stringify(userInput));
     });
   };
+
+// change background color
+function backgroundColor() {
+    $(".form-control").each(function() {
+        var block = parseInt($(this).attr('id'));
+        hour = parseInt(hour);
+
+        if (hour > block) {
+            $(this).addClass('past');
+        } else if (hour < block) {
+            $(this).addClass('future');
+        } else {
+            $(this).addClass('present');
+        }
+    });
+};
